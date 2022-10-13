@@ -31,15 +31,38 @@ public class Main {
 
 //        app.post("/user", userController.createNewUser);
 
+
+//        USERS: Manager -> delete user by id
+        app.delete("/user", mainController.delUser);
+
 //       Loggin info, Log in, log out methods [check]
         app.get("/login", mainController.loginGet);
         app.post("/login", mainController.login);
         app.delete("/login", mainController.loginout);
 
 
-//        Register info, Register new User [Check]
+//        Register info, Register new User with sign in [Check]
         app.get("/register", mainController.registerHome);
         app.post("/register", mainController.register);
+
+//        Tickets: Employee -> Submit, view all previous tickets made by user
+//        app.get("/ticket", mainController.register);
+        app.post("/ticket", mainController.createTicket);
+
+//        Tickets: Manager -> Process unprocessed employee tickets by
+//                 approved or denied, in a queue and removed when processed
+
+//        Optional:
+//                Reinbursement type
+
+
+//                Change Roles
+//        USERS: Manager -> delete user by id
+        app.post("/editUser", mainController.changePos);
+
+
+//                upload pic of reciept
+//                update account feature
 
 
 

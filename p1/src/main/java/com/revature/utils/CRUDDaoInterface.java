@@ -10,6 +10,9 @@ public interface CRUDDaoInterface <T> {
     // we are returning an int because we are returning the primary key of this newly added row
     int create(T t);
 
+//    change pos
+    boolean changePos(T t);
+
     //arrayList of whatever type I query
     List<T> getAll();
 

@@ -45,6 +45,31 @@ public class UserRepo implements CRUDDaoInterface<User> {
 
 
 
+    //    /////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean changePos(User user) {
+
+//        Change this for email, profile pic etc.
+        try{
+
+            String sql = "UPDATE users SET is_manager = ? WHERE id = ? OR username = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, user.getIsManager());
+            pstmt.setInt(2,user.getId());
+            pstmt.setString(3,user.getUsername());
+
+            pstmt.executeUpdate();
+
+            return true;
+        }catch(SQLException sqlException){
+            System.out.println(sqlException.getMessage());
+        }
+
+
+        return false;
+    }
+
     @Override
     public int create(User user) {
 

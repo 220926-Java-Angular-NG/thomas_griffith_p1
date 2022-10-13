@@ -55,4 +55,6 @@ public class UserService {
         return userRepo.delete(user);
     }
 
+    public boolean changePos(User user) {return userRepo.changePos(user);}
+
 }

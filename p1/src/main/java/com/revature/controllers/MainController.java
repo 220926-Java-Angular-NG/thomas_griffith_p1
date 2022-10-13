@@ -102,6 +102,7 @@ public class MainController {
         caches.level = Cache.Level.NONE;
         caches.curUserID = -1;
         caches.curUsername = "";
+
         context.result("You have been logged out");
 
 
@@ -208,6 +209,61 @@ public class MainController {
         }
 
     };
+
+
+    //////////////////////////////////////////////////////////////////
+//   Manager views all tickets processing
+    public Handler managerTickets = context -> {
+        if (caches.level == Cache.Level.MANAGER){
+
+//            User in = context.bodyAsClass(User.class);
+
+            List<Ticket> tickets = ticketService.getAll();
+
+            context.result("Ticket list made");
+            String lists = "";
+            for(Ticket tic: tickets){
+                lists+=tic.toString()+"\n";
+            }
+            context.result(lists);
+            caches.ticketList = tickets;
+
+        }else{
+            context.result("You need to be an Manager to see all processing tickets");
+        }
+
+
+    };
+
+
+    //////////////////////////////////////////////////////////////////
+//   Manager updates ticket
+    public Handler managerUpdateTickets = context -> {
+        if (caches.level == Cache.Level.MANAGER){
+
+//            User in = context.bodyAsClass(User.class);
+            Ticket in = context.bodyAsClass(Ticket.class);
+            boolean update = ticketService.updatetic(in.getId(), in.status);
+
+            if(update){
+                List<Ticket> tickets = ticketService.getAll();
+                String lists = "";
+                for(Ticket tic: tickets){
+                    lists+=tic.toString()+"\n";
+                }
+                context.result("Updated\nNew queue below \n" + lists);
+                caches.ticketList = tickets;
+            }else {
+                context.result("not updated, please enter id and status");
+            }
+
+        }else{
+            context.result("You need to be a Manager to update ticket");
+        }
+
+
+    };
+
 
 
 }

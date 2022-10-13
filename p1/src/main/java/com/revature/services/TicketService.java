@@ -37,6 +37,15 @@ public class TicketService {
         return ticketRepo.getTicketByCreator_id(creator_id);
     }
 
+    public List<Ticket> getAll(){
+
+        return ticketRepo.getAll();
+    }
+
+    public boolean updatetic(int id, Ticket.STATUS status){
+
+        return ticketRepo.updatetic(id, status);
+    }
 
 
 

@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.util.List;
+
 public class Cache {
 
 
@@ -9,5 +11,7 @@ public class Cache {
 
     public String curUsername = null;
     public int curUserID = -1;
+
+    public List<Ticket> ticketList;
 
 }

@@ -49,11 +49,12 @@ public class Main {
 //        app.get("/ticket", mainController.register);
         app.post("/ticket", mainController.createTicket);
         app.get("/ticket", mainController.allPrevTicket);
-        app.get("/ticket", mainController.allPrevTicket);
+//        app.get("/ticket", mainController.allPrevTicket);
 
 //        Tickets: Manager -> Process unprocessed employee tickets by
 //                 approved or denied, in a queue and removed when processed
-
+        app.get("/ticketMan", mainController.managerTickets);
+        app.post("/ticketMan", mainController.managerUpdateTickets);
 //        Optional:
 //                Reinbursement type
 

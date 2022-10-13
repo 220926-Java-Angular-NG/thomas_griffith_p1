@@ -287,6 +287,11 @@ public class UserRepo implements CRUDDaoInterface<User> {
     }
 
     @Override
+    public boolean updatetic(int id, Ticket.STATUS status) {
+        return false;
+    }
+
+    @Override
     public boolean delete(User user) {
 
         try {

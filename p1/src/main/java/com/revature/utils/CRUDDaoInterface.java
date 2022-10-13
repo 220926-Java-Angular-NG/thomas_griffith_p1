@@ -30,6 +30,7 @@ public interface CRUDDaoInterface <T> {
 //    T checkUsername(String username);
 
     T update(T t);
+    boolean updatetic(int id, Ticket.STATUS status);
 
     boolean delete(T t);
 }

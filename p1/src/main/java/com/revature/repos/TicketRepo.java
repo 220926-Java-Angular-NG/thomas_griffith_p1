@@ -101,6 +101,38 @@ public class TicketRepo implements CRUDDaoInterface<Ticket> {
 
     @Override
     public List<Ticket> getAll() {
+        List<Ticket> tickets = new ArrayList<Ticket>();
+
+        try {
+
+            String sql = "SELECT * FROM tickets WHERE status = 'pending' ORDER BY id ASC";
+
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                Ticket ticket = new Ticket();
+                ticket.setId(rs.getInt("id"));
+                ticket.setAmount(rs.getDouble("amount"));
+                ticket.setDescription(rs.getString("description"));
+                ticket.setStatus(Ticket.STATUS.valueOf(rs.getString("status")));
+                ticket.setType(Ticket.TYPE.valueOf(rs.getString("ticket_type")));
+                ticket.setCreator_id(rs.getInt("creator_id"));
+
+
+                tickets.add(ticket);
+
+            }
+
+            return tickets;
+
+        }catch(SQLException sqlException){
+
+            System.out.println(sqlException.getMessage());
+        }
+
         return null;
     }
 
@@ -166,7 +198,7 @@ public class TicketRepo implements CRUDDaoInterface<Ticket> {
                 ticket.setDescription(rs.getString("description"));
                 ticket.setStatus(Ticket.STATUS.valueOf(rs.getString("status")));
                 ticket.setType(Ticket.TYPE.valueOf(rs.getString("ticket_type")));
-                ticket.setId(rs.getInt("creator_id"));
+                ticket.setCreator_id(rs.getInt("creator_id"));
 
 
                 tickets.add(ticket);
@@ -196,6 +228,27 @@ public class TicketRepo implements CRUDDaoInterface<Ticket> {
     @Override
     public Ticket update(Ticket ticket) {
         return null;
+    }
+
+    @Override
+    public boolean updatetic(int id, Ticket.STATUS status) {
+//        Change status for ticket
+        try{
+
+            String sql = "UPDATE tickets SET status = CAST(? AS status) WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, status.toString());
+            pstmt.setInt(2,id);
+
+            pstmt.executeUpdate();
+            return true;
+
+        }catch(SQLException sqlException){
+            System.out.println(sqlException.getMessage());
+        }
+
+
+        return false;
     }
 
     @Override

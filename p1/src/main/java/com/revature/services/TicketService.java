@@ -5,6 +5,8 @@ import com.revature.models.User;
 import com.revature.repos.TicketRepo;
 import com.revature.repos.UserRepo;
 
+import java.util.List;
+
 public class TicketService {
 
     private TicketRepo ticketRepo;
@@ -23,6 +25,16 @@ public class TicketService {
     public int createTicket(Ticket ticket){
 
         return ticketRepo.create(ticket);
+    }
+
+    public List<Ticket> getTicketByType(int creator_id, Ticket.TYPE type){
+
+        return ticketRepo.getTicketByType(creator_id, type);
+    }
+
+    public List<Ticket> getTicketByCreator_id(int creator_id){
+
+        return ticketRepo.getTicketByCreator_id(creator_id);
     }
 
 

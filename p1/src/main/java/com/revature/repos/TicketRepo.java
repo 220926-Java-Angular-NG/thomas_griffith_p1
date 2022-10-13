@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TicketRepo implements CRUDDaoInterface<Ticket> {
@@ -100,6 +101,85 @@ public class TicketRepo implements CRUDDaoInterface<Ticket> {
 
     @Override
     public List<Ticket> getAll() {
+        return null;
+    }
+
+    @Override
+    public List<Ticket> getTicketByType(int creator_id, Ticket.TYPE type) {
+
+        List<Ticket> tickets = new ArrayList<Ticket>();
+
+        try {
+
+            String sql = "SELECT * FROM tickets where creator_id = ? AND ticket_type = ?";
+
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1,creator_id);
+            pstmt.setString(2, type.name());
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                Ticket ticket = new Ticket();
+                ticket.setId(rs.getInt("id"));
+                ticket.setAmount(rs.getDouble("amount"));
+                ticket.setDescription(rs.getString("description"));
+                ticket.setStatus(Ticket.STATUS.valueOf(rs.getString("status")));
+                ticket.setType(Ticket.TYPE.valueOf(rs.getString("ticket_type")));
+                ticket.setCreator_id(rs.getInt("creator_id"));
+
+
+                tickets.add(ticket);
+
+            }
+
+            return tickets;
+
+        }catch(SQLException sqlException){
+
+            System.out.println(sqlException.getMessage());
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Ticket> getTicketByCreator_id(int creator_id) {
+
+        List<Ticket> tickets = new ArrayList<Ticket>();
+
+        try {
+
+            String sql = "SELECT * FROM tickets where creator_id = ?";
+
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1,creator_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                Ticket ticket = new Ticket();
+                ticket.setId(rs.getInt("id"));
+                ticket.setAmount(rs.getDouble("amount"));
+                ticket.setDescription(rs.getString("description"));
+                ticket.setStatus(Ticket.STATUS.valueOf(rs.getString("status")));
+                ticket.setType(Ticket.TYPE.valueOf(rs.getString("ticket_type")));
+                ticket.setId(rs.getInt("creator_id"));
+
+
+                tickets.add(ticket);
+
+            }
+
+            return tickets;
+
+        }catch(SQLException sqlException){
+
+            System.out.println(sqlException.getMessage());
+        }
+
         return null;
     }
 

@@ -1,5 +1,7 @@
 package com.revature.utils;
 
+import com.revature.models.Ticket;
+
 import java.util.List;
 
 public interface CRUDDaoInterface <T> {
@@ -15,6 +17,11 @@ public interface CRUDDaoInterface <T> {
 
     //arrayList of whatever type I query
     List<T> getAll();
+
+    //arrayList of whatever type I query
+    List<T> getTicketByType(int creator_id, Ticket.TYPE type);
+
+    List<T> getTicketByCreator_id(int creator_id);
 
     T getById(int id);
 

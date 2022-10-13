@@ -7,6 +7,8 @@ import com.revature.services.TicketService;
 import com.revature.services.UserService;
 import io.javalin.http.Handler;
 
+import java.util.List;
+
 
 public class MainController {
 
@@ -154,6 +156,46 @@ public class MainController {
     //////////////////////////////////////////////////////////////////
 //    Create a ticket
     public Handler createTicket = context -> {
+        if (caches.level == Cache.Level.EMPLOYEE){
+
+            Ticket in = context.bodyAsClass(Ticket.class);
+
+            int id = ticketService.createTicket(in);
+            context.result("Ticket Created");
+
+        }else{
+            context.result("You need to be an employee to create ticket");
+        }
+
+    };
+
+
+    //////////////////////////////////////////////////////////////////
+//   Employee views his past tickets
+    public Handler allPrevTicket = context -> {
+        if (caches.level == Cache.Level.EMPLOYEE){
+
+//            User in = context.bodyAsClass(User.class);
+
+            List<Ticket> tickets = ticketService.getTicketByCreator_id(caches.curUserID);
+
+            context.result("Ticket list made");
+            String lists = "";
+            for(Ticket tic: tickets){
+                lists+=tic.toString()+"\n";
+            }
+            context.result(lists);
+
+        }else{
+            context.result("You need to be an employee to create ticket");
+        }
+
+    };
+
+
+    //////////////////////////////////////////////////////////////////
+//   Employee views his past tickets by type
+    public Handler prevTicketType = context -> {
         if (caches.level == Cache.Level.EMPLOYEE){
 
             Ticket in = context.bodyAsClass(Ticket.class);

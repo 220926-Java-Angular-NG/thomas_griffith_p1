@@ -1,5 +1,6 @@
 package com.revature.repos;
 
+import com.revature.models.Ticket;
 import com.revature.models.User;
 import com.revature.utils.CRUDDaoInterface;
 import com.revature.utils.ConnectionManager;
@@ -139,6 +140,17 @@ public class UserRepo implements CRUDDaoInterface<User> {
 
         return null;
     }
+
+    @Override
+    public List<User> getTicketByType(int creator_id, Ticket.TYPE type) {
+        return null;
+    }
+
+    @Override
+    public List<User> getTicketByCreator_id(int creator_id) {
+        return null;
+    }
+
 
     @Override
     public User getById(int id) {

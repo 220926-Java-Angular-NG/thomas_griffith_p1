@@ -48,6 +48,8 @@ public class Main {
 //        Tickets: Employee -> Submit, view all previous tickets made by user
 //        app.get("/ticket", mainController.register);
         app.post("/ticket", mainController.createTicket);
+        app.get("/ticket", mainController.allPrevTicket);
+        app.get("/ticket", mainController.allPrevTicket);
 
 //        Tickets: Manager -> Process unprocessed employee tickets by
 //                 approved or denied, in a queue and removed when processed

@@ -14,9 +14,9 @@ public class Ticket {
     public Ticket.STATUS status = STATUS.pending;
 
 
-    public enum TYPE {TRAVEL, LODGING, FOOD, OTHER}
+    public enum TYPE {travel, lodging, food, other}
 
-    private Ticket.TYPE type = TYPE.OTHER;
+    private Ticket.TYPE type = TYPE.other;
 
     public Ticket() {
     }

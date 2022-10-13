@@ -63,13 +63,15 @@ public class TicketRepo implements CRUDDaoInterface<Ticket> {
 
 
         try {
-            String sql = "INSERT INTO tickets (id, amount, description, creator_id) VALUES (default, ?, ?, ?)";
+            String sql = ("INSERT INTO tickets (id, amount, description, creator_id, ticket_type) " +
+                    "VALUES (default, ?, ?, ?, CAST(? AS TicketType))");
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setDouble(1,ticket.getAmount());
             pstmt.setString(2, ticket.getDescription());
             pstmt.setInt(3, ticket.getCreator_id());
-//            pstmt.setString(4, ticket.getType().toString());
+//            Ticket.TYPE type = Ticket.TYPE.valueOf(ticket.getType().toString());
+            pstmt.setString(4, ticket.getType().toString());
 
 
 //            this executes the sql statement above

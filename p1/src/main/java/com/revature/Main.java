@@ -49,6 +49,7 @@ public class Main {
 //        app.get("/ticket", mainController.register);
         app.post("/ticket", mainController.createTicket);
         app.get("/ticket", mainController.allPrevTicket);
+        app.get("/tickets", mainController.prevTicketType);
 //        app.get("/ticket", mainController.allPrevTicket);
 
 //        Tickets: Manager -> Process unprocessed employee tickets by
@@ -67,7 +68,7 @@ public class Main {
 //                upload pic of reciept
 //                update account feature
 
-
+        app.get("/info", mainController.checkStatus);
 
 //        app.get("/users",userController.getAllUsers);
 

@@ -143,13 +143,15 @@ public class TicketRepo implements CRUDDaoInterface<Ticket> {
 
         try {
 
-            String sql = "SELECT * FROM tickets where creator_id = ? AND ticket_type = ?";
+            String sql = "SELECT * FROM tickets where creator_id = ? AND ticket_type = CAST(? AS TicketType)";
 
+//            check if type works now
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setInt(1,creator_id);
-            pstmt.setString(2, type.name());
+            System.out.println(type.toString());
+            pstmt.setString(2, type.toString());
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){

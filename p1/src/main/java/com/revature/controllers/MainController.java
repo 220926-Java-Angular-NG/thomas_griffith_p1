@@ -40,6 +40,17 @@ public class MainController {
 
     };
 
+    //////////////////////////////////////////////////////////////////
+//    delete user only manager
+    public Handler checkStatus = context -> {
+
+
+        context.result("User info:\n" + "Username: " + caches.curUsername + "\n"
+                        + "Clearance Level: " + caches.level);
+
+
+    };
+
 
 
     //////////////////////////////////////////////////////////////////
@@ -90,7 +101,7 @@ public class MainController {
             caches.level = Cache.Level.EMPLOYEE;
         }
 
-
+        context.result(caches.curUsername + " is logged in as an " + caches.level);
         System.out.println(caches.curUsername + " is logged in as an " + caches.level);
 
     };
@@ -140,7 +151,7 @@ public class MainController {
         } else{
             caches.level = Cache.Level.EMPLOYEE;
         }
-
+        context.result("User is created and you are logged in");
         System.out.println(caches);
 
         }else{
@@ -157,13 +168,20 @@ public class MainController {
     //////////////////////////////////////////////////////////////////
 //    Create a ticket
     public Handler createTicket = context -> {
-        if (caches.level == Cache.Level.EMPLOYEE){
+        if (caches.level == Cache.Level.EMPLOYEE) {
 
             Ticket in = context.bodyAsClass(Ticket.class);
-
-            int id = ticketService.createTicket(in);
-            context.result("Ticket Created");
-
+            System.out.println(in.getAmount());
+            if (in.getAmount() > 1 && in.getDescription().length() > 1){
+                int id = ticketService.createTicket(in);
+                if (id == 0) {
+                    context.result("does not work");
+                } else {
+                    context.result("Ticket Created");
+                }
+            }else {
+                context.result("You need to add amount and description");
+            }
         }else{
             context.result("You need to be an employee to create ticket");
         }
@@ -200,9 +218,15 @@ public class MainController {
         if (caches.level == Cache.Level.EMPLOYEE){
 
             Ticket in = context.bodyAsClass(Ticket.class);
+            System.out.println(caches.curUserID + " " + in.getType().toString());
+            List<Ticket> tickets = ticketService.getTicketByType(caches.curUserID, in.getType());
 
-            int id = ticketService.createTicket(in);
-            context.result("Ticket Created");
+            String lists = "";
+            for(Ticket tic: tickets){
+                lists+=tic.toString()+"\n";
+            }
+            context.result(lists);
+
 
         }else{
             context.result("You need to be an employee to create ticket");
